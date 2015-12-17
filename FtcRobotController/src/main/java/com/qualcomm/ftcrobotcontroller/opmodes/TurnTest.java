@@ -10,44 +10,69 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
 public class TurnTest extends LinearOpMode {
 
     Drivetrain drivetrain = new Drivetrain();
-    GyroSensor gyro;
     int currentHeading;
     int goalHeading;
     int targetAngle = 45;
     double speed = -0.75;
+    int rotationalVelocity;
+    long dt = 50;
 
     int xVal, yVal, zVal = 0;
     int heading = 0;
+    int error = 0;
 
 
     @Override
     public void runOpMode() throws InterruptedException {
         drivetrain.init(hardwareMap);
-        gyro = hardwareMap.gyroSensor.get("gyro");
         telemetry.addData("Drivetrain Init Complete", "");
 
         waitForStart();
-        gyro.calibrate();
 
-        while(opModeIsActive()) {
-            while( Math.abs(gyro.getHeading()-90) > 3){
-                drivetrain.arcadeDrive(0, speed);
-                telemetry.addData("4. h", String.format("%03d", heading));
+
+
+        while (opModeIsActive()) {
+            while(drivetrain.getHeading() < 45 || drivetrain.getHeading() > 60) {
+                drivetrain.arcadeDrive(0, -1);
+                telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
             }
+            telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
             drivetrain.arcadeDrive(0, 0);
+            telemetry.addData("Complete: ", "");
             sleep(5000);
             /*
-            currentHeading = 0;
-            goalHeading = (currentHeading + targetAngle)%360;
-            speed = Math.abs(speed) * targetAngle/Math.abs(targetAngle);
+            rotationalVelocity = gyro.rawZ();
+            if(Math.abs(rotationalVelocity) > 5)
+                currentHeading += gyro.rawZ()*(dt/1000.0);
 
-            while( Math.abs(goalHeading - gyro.getHeading()) > drivetrain.headingTolerance){
-                drivetrain.arcadeDrive(0, speed);
+            telemetry.addData("Heading", currentHeading);
+            telemetry.addData("Absolute Heading ", String.format("%03d", gyro.getHeading()));
+            sleep(dt);
+            */
+
+            /*
+            while (gyro.getHeading() < 90) {
+                telemetry.addData("Heading ", String.format("%03d", gyro.getHeading()));
+                error = Math.abs(90 - gyro.getHeading());
+                telemetry.addData("Error ", error);
             }
-            drivetrain.arcadeDrive(0, 0);
+            telemetry.addData("Turning Complete", "");
             sleep(5000);
             */
+
         }
+        /*
+        currentHeading = 0;
+        goalHeading = (currentHeading + targetAngle)%360;
+        speed = Math.abs(speed) * targetAngle/Math.abs(targetAngle);
+
+        while( Math.abs(goalHeading - gyro.getHeading()) > drivetrain.headingTolerance){
+            drivetrain.arcadeDrive(0, speed);
+        }
+        drivetrain.arcadeDrive(0, 0);
+        sleep(5000);
+        */
+
         /*
 
         */

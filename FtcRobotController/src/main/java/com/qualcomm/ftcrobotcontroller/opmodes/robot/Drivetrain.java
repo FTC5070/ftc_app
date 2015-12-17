@@ -39,9 +39,10 @@ public class Drivetrain {
 
         gyro.calibrate();
 
-        while (gyro.isCalibrating())  {
-            Thread.sleep(50);
-        }
+
+
+        while (gyro.isCalibrating()) {}
+        Thread.sleep(50);
 
     }
 
@@ -97,6 +98,10 @@ public class Drivetrain {
         } else{
             return 0;
         }
+    }
+
+    public int getHeading(){
+        return gyro.getHeading();
     }
 
     public void drive(double inches, double speed) throws InterruptedException {
@@ -167,6 +172,7 @@ public class Drivetrain {
         arcadeDrive(0, 0);
     }
 
+    /*
     public void turnAngle(int targetAngle, double speed){
 
         int currentHeading = gyro.getHeading();
@@ -205,6 +211,7 @@ public class Drivetrain {
         }
         arcadeDrive(0, 0);
     }
+    */
 
     public void sleep(long milliseconds) throws InterruptedException {
         Thread.sleep(milliseconds);
