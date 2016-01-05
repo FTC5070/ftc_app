@@ -29,13 +29,19 @@ public class ZiplineScorer {
         rightServo.setPosition(rightIn);
     }
 
-    public void setIn(){
+    public void setLeftIn(){
         leftServo.setPosition(leftIn);
+    }
+
+    public void setRightIn(){
         rightServo.setPosition(rightIn);
     }
 
-    public void setOut(){
+    public void setLeftOut(){
         leftServo.setPosition(leftOut);
+    }
+
+    public void setRightOut(){
         rightServo.setPosition(rightOut);
     }
 }

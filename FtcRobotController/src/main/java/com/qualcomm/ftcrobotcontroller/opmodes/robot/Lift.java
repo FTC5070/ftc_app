@@ -18,18 +18,6 @@ public class Lift {
 
     public boolean isShiftedHigh = true;
 
-    /*
-    public Servo leftLock;
-    double leftLockedPosition;
-    double leftUnlockedPosition;
-
-    public Servo rightLock;
-    double rightLockedPosition;
-    double rightUnlockedPosition;
-
-    public boolean isLocked = false;
-    */
-
     public int targetPosition = 0;
     double KP = 0.05;
 
@@ -46,22 +34,10 @@ public class Lift {
         rightShifter = hardwareMap.servo.get("rightLiftServo");
 
 
-        /*
-        leftLock = hardwareMap.servo.get("leftLockServo");
-        rightLock = hardwareMap.servo.get("rightLockServo");
-        */
-
         rightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         leftShifter.setPosition(leftShifterHighGear);
         rightShifter.setPosition(rightShifterHighGear);
-
-
-        /*
-        leftLock.setPosition(leftUnlockedPosition);
-        rightLock.setPosition(rightUnlockedPosition);
-        */
-
     }
 
     public void setSpeed(double speed){
@@ -88,17 +64,5 @@ public class Lift {
             rightShifter.setPosition(rightShifterHighGear);
         }
     }
-
-    /*
-    public void lock(){
-        leftLock.setPosition(leftLockedPosition);
-        rightLock.setPosition(rightLockedPosition);
-    }
-
-    public void unlock(){
-        leftLock.setPosition(leftUnlockedPosition);
-        rightLock.setPosition(rightUnlockedPosition);
-    }
-    */
 }
 

@@ -39,8 +39,6 @@ public class Drivetrain {
 
         gyro.calibrate();
 
-
-
         while (gyro.isCalibrating()) {}
         Thread.sleep(50);
 
@@ -85,7 +83,6 @@ public class Drivetrain {
         backRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
         sleep(50);
-
     }
 
     public int getAverageEncoderValue(String side) {

@@ -13,12 +13,11 @@ public class ClassifiedTeleOp extends OpMode{
 
     Lift lift = new Lift();
     Drivetrain drivetrain = new Drivetrain();
-    //Arm arm = new Arm();
     Intake intake = new Intake();
     Dumper dumper = new Dumper();
     ZiplineScorer ziplineScorer = new ZiplineScorer();
+    ClimberScorer climberScorer = new ClimberScorer();
 
-    Servo climberServo;
 
     @Override
     public void init() {
@@ -28,14 +27,10 @@ public class ClassifiedTeleOp extends OpMode{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //arm.init(hardwareMap);
         intake.init(hardwareMap);
         dumper.init(hardwareMap);
         ziplineScorer.init(hardwareMap);
-
-        climberServo = hardwareMap.servo.get("climberServo");
-        climberServo.setPosition(1);
-
+        climberScorer.init(hardwareMap);
     }
 
     @Override
@@ -47,20 +42,17 @@ public class ClassifiedTeleOp extends OpMode{
         lift.setSpeed(-gamepad2.left_stick_y);
         */
 
-        //if(!lift.isLocked) {
-        if (lift.isShiftedHigh) {
-            drivetrain.tankDrive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);//drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
-            lift.setSpeed(-gamepad2.left_stick_y);
-        } else {
+        //if (lift.isShiftedHigh) {
+        drivetrain.tankDrive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);//drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+        lift.setSpeed(-gamepad2.left_stick_y);
+        /*} else {
             lift.setSpeed(gamepad2.left_stick_y * 3.0 / 4.0);
             drivetrain.arcadeDrive(gamepad2.left_stick_y, 0);
         }
-        //}
-        //else{
-        //    drivetrain.arcadeDrive(0,0);
-        //    lift.setSpeed(0);
-        //}
+        */
 
+
+        /*
         if(gamepad2.dpad_up){
             lift.isShiftedHigh = true;
 
@@ -78,6 +70,7 @@ public class ClassifiedTeleOp extends OpMode{
 
             lift.setGear("Low");
         }
+        */
 
 
         if(gamepad1.left_bumper)
@@ -92,26 +85,24 @@ public class ClassifiedTeleOp extends OpMode{
 
 
         if(gamepad2.left_bumper)
-            ziplineScorer.leftServo.setPosition(ziplineScorer.leftOut);
+            ziplineScorer.setLeftOut();
         else
-            ziplineScorer.leftServo.setPosition(ziplineScorer.leftIn);
+            ziplineScorer.setLeftIn();
 
         if(gamepad2.right_bumper)
-            ziplineScorer.rightServo.setPosition(ziplineScorer.rightOut);
+            ziplineScorer.setRightOut();
         else
-            ziplineScorer.rightServo.setPosition(ziplineScorer.rightIn);
-
+            ziplineScorer.setRightIn();
 
 
         if(gamepad2.a)
-            climberServo.setPosition(0);
+            climberScorer.score();
 
         if(gamepad2.b)
-            climberServo.setPosition(1);
+            climberScorer.reset();
 
         if(gamepad2.y)
-            climberServo.setPosition(0.5);
-
+            climberScorer.raise();;
 
 
         if(gamepad2.dpad_left)
@@ -123,27 +114,5 @@ public class ClassifiedTeleOp extends OpMode{
         if(!(gamepad2.dpad_left || gamepad2.dpad_right))
             dumper.setNeutral();
 
-
-        /*
-
-        if(gamepad2.y)
-            arm.motor.setPower(arm.motorForwardSpeed);
-
-        if(gamepad2.a)
-            arm.motor.setPower(arm.motorBackwardSpeed);
-
-        if(!(gamepad2.y || gamepad2.a))
-            arm.motor.setPower(arm.motorStoppedSpeed);
-
-
-        if(gamepad2.right_stick_y >= 0.4)
-           arm.servo.setPosition(arm.servoUpwardSpeed);
-
-        if(gamepad2.right_stick_y <= -0.4)
-            arm.servo.setPosition(arm.servoDownwardSpeed);
-
-        if(Math.abs(gamepad2.right_stick_y) < 0.4)
-            arm.servo.setPosition(arm.servoDownwardSpeed);
-        */
     }
 }
