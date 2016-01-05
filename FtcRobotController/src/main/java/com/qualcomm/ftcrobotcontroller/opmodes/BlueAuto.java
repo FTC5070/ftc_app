@@ -13,9 +13,9 @@ import com.qualcomm.robotcore.util.Range;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Carlos on 11/23/2015.
+ * Created by Carlos on 12/19/2015.
  */
-public class RedAuto extends LinearOpMode{
+public class BlueAuto extends LinearOpMode{
 
     Drivetrain drivetrain = new Drivetrain();
     Intake intake = new Intake();
@@ -61,8 +61,8 @@ public class RedAuto extends LinearOpMode{
         telemetry.addData("Step 1 Complete", ".");
 
         sleep(500);
-        while(drivetrain.getHeading() < 45 || drivetrain.getHeading() > 50) {
-            drivetrain.arcadeDrive(0, -0.5);
+        while(drivetrain.getHeading() > 315 || drivetrain.getHeading() < 305) {
+            drivetrain.arcadeDrive(0, 0.5);
             telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
         }
 
@@ -77,7 +77,7 @@ public class RedAuto extends LinearOpMode{
         drivetrain.moveDistance(3800, 0.5);
         telemetry.addData("Step 3 Complete", ".");
 
-        while(drivetrain.getHeading() < 90 || drivetrain.getHeading() > 100) {
+        while(drivetrain.getHeading() > 270 || drivetrain.getHeading() < 260) {
             drivetrain.arcadeDrive(0, -0.5);
             telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
         }
