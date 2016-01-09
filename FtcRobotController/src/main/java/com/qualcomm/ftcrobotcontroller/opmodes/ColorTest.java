@@ -24,8 +24,14 @@ public class ColorTest extends LinearOpMode {
         waitOneFullHardwareCycle();*/
 
         while(opModeIsActive()){
-            telemetry.addData("Blue: ", sensorRGB.blue());
-            telemetry.addData("Red: ", sensorRGB.red());
+            sensorRGB.enableLed(gamepad1.x);
+
+            if(sensorRGB.blue() > sensorRGB.red())
+                telemetry.addData("Color: ", "Blue");
+            else if(sensorRGB.red() > sensorRGB.blue())
+                telemetry.addData("Color: ", "Red");
+            else
+                telemetry.addData("Color: ", "Null");
         }
 
     }
