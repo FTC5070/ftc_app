@@ -19,7 +19,7 @@ public class StraightAuto extends LinearOpMode{
 
     Drivetrain drivetrain = new Drivetrain();
     Intake intake = new Intake();
-    Autonomous autonomous = new Autonomous();
+    BeaconScorer beaconScorer = new BeaconScorer();
     ClimberScorer climberScorer = new ClimberScorer();
     Dumper dumper = new Dumper();
 
@@ -38,12 +38,8 @@ public class StraightAuto extends LinearOpMode{
         telemetry.addData("Drivetrain Init Complete", "");
         intake.init(hardwareMap);
         telemetry.addData("Intake Init Complete", "");
-        autonomous.init(hardwareMap);
-        telemetry.addData("Autonomous Init Complete", "");
-        autonomous.rightButtonServo.setPosition(0.5);
-        telemetry.addData("Right Button Servo Init Complete", "");
-        autonomous.leftButtonServo.setPosition(0.5);
-        telemetry.addData("Left Button Servo Init Complete", "");
+        beaconScorer.init(hardwareMap);
+        telemetry.addData("Beacon Scorer Init Complete", "");
         climberScorer.init(hardwareMap);
         telemetry.addData("Climber Servo Init Complete", "");
         dumper.init(hardwareMap);

@@ -17,6 +17,7 @@ public class ClassifiedTeleOp extends OpMode{
     Dumper dumper = new Dumper();
     ZiplineScorer ziplineScorer = new ZiplineScorer();
     ClimberScorer climberScorer = new ClimberScorer();
+    BeaconScorer beaconScorer = new BeaconScorer();
 
 
     @Override
@@ -31,6 +32,7 @@ public class ClassifiedTeleOp extends OpMode{
         dumper.init(hardwareMap);
         ziplineScorer.init(hardwareMap);
         climberScorer.init(hardwareMap);
+        beaconScorer.init(hardwareMap);
     }
 
     @Override

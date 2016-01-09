@@ -19,16 +19,11 @@ public class RedAuto extends LinearOpMode{
 
     Drivetrain drivetrain = new Drivetrain();
     Intake intake = new Intake();
-    Autonomous autonomous = new Autonomous();
+    BeaconScorer beaconScorer = new BeaconScorer();
     ClimberScorer climberScorer = new ClimberScorer();
     Dumper dumper = new Dumper();
 
-
-
-    double rightButtonServoPressed = 0.45;
-    double leftButtonServoPressed = 0.57;
-
-    boolean isRed = false;
+    String beaconColor;
 
 
     @Override
@@ -38,16 +33,12 @@ public class RedAuto extends LinearOpMode{
         telemetry.addData("Drivetrain Init Complete", "");
         intake.init(hardwareMap);
         telemetry.addData("Intake Init Complete", "");
-        autonomous.init(hardwareMap);
-        telemetry.addData("Autonomous Init Complete", "");
-        autonomous.rightButtonServo.setPosition(0.5);
-        telemetry.addData("Right Button Servo Init Complete", "");
-        autonomous.leftButtonServo.setPosition(0.5);
-        telemetry.addData("Left Button Servo Init Complete", "");
+        beaconScorer.init(hardwareMap);
+        telemetry.addData("Beacon Scorer Init Complete", "");
         climberScorer.init(hardwareMap);
         telemetry.addData("Climber Servo Init Complete", "");
         dumper.init(hardwareMap);
-
+        telemetry.addData("Dumper Init Complete", "");
 
         waitForStart();
 
@@ -89,37 +80,40 @@ public class RedAuto extends LinearOpMode{
         intake.stop();
         sleep(500);
 
-        drivetrain.moveDistance(250, 0.5);
+        drivetrain.arcadeDrive(0, 0);
         telemetry.addData("Step 5 Complete", ".");
+        /*
+        drivetrain.moveDistance(250, 0.5);
         sleep(500);
+        */
 
         climberScorer.score();
         sleep(1000);
         climberScorer.reset();
 
-        //isRed = (autonomous.sensorRGB.red() > 0.5);
-        //telemetry.addData("Step 6 Complete", ".");
+        beaconColor = beaconScorer.getBeaconColor();
 
         drivetrain.moveDistance(500, -0.5);
         telemetry.addData("Step 7 Complete", ".");
         sleep(500);
 
-        /*if (isRed) {
-            autonomous.PressLeftButton();
+        if(beaconColor == "Red") {
+            beaconScorer.pressLeftButton();
+        }
+        else if(beaconColor == "Blue") {
+            beaconScorer.pressRightButton();
         }
         else {
-            autonomous.PressRightButton();
+            telemetry.addData("ERROR!", "Could not read beacon color!");
         }
         telemetry.addData("Step 8 Complete", ".");
 
         drivetrain.moveDistance(750, 0.5);
         telemetry.addData("Step 9 Complete", ".");
-        sleep(500);*/
+        sleep(500);
 
-
-
+        beaconScorer.resetButtonPressers();
     }
-
 
 }
 
