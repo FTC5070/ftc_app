@@ -14,17 +14,17 @@ public class BeaconScorer {
     public Servo leftButtonServo;
     public ColorSensor sensorRGB;
 
-    double rightButtonServoPressed = 0.45;
-    double leftButtonServoPressed = 0.57;
-    double leftButtonServoReset = 0.43;
-    double rightButtonServoReset = 0.55;
+    double rightButtonServoPressed = 0.40;
+    double leftButtonServoPressed = 0.60;
+    double leftButtonServoReset = 0.40;
+    double rightButtonServoReset = 0.60;
     
     boolean rightIsPressed = false;
     boolean leftIsPressed = false;
 
     double servoStop = 0.5;
 
-    long turnTime = 1575;
+    long turnTime = 870;
 
     public BeaconScorer(){
     }
@@ -37,6 +37,7 @@ public class BeaconScorer {
 
         rightButtonServo.setPosition(servoStop);
         leftButtonServo.setPosition(servoStop);
+        sensorRGB.enableLed(true);
 
     }
 
@@ -63,25 +64,31 @@ public class BeaconScorer {
 
     public void resetButtonPressers() throws InterruptedException {
 
-        if(leftIsPressed)
+        if(leftIsPressed) {
             leftButtonServo.setPosition(leftButtonServoReset);
+            TimeUnit.MILLISECONDS.sleep(turnTime);
+            leftButtonServo.setPosition(servoStop);
+            leftIsPressed = false;
+        }
         
-        if(rightIsPressed)
+        if(rightIsPressed) {
             rightButtonServo.setPosition(rightButtonServoReset);
-        
-        TimeUnit.MILLISECONDS.sleep(turnTime);
-        leftButtonServo.setPosition(servoStop);
+            TimeUnit.MILLISECONDS.sleep(turnTime);
+            leftButtonServo.setPosition(servoStop);
+            rightIsPressed = false;
+        }
+
         rightButtonServo.setPosition(servoStop);
     }
 
     public String getBeaconColor() {
 
-        sensorRGB.enableLed(true);
+        sensorRGB.enableLed(false);
 
         if(sensorRGB.blue() == 0 && sensorRGB.red() == 0)
             return "Null";
 
-        sensorRGB.enableLed(false);
+        sensorRGB.enableLed(true);
 
         if(sensorRGB.blue() > sensorRGB.red())
             return "Blue";

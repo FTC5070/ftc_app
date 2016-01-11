@@ -49,6 +49,10 @@ public class BeaconTest extends LinearOpMode {
             else {
                 telemetry.addData("ERROR!", "Could not read beacon color!");
             }
+
+            sleep(1000);
+
+            beaconScorer.resetButtonPressers();
         }
     }
 

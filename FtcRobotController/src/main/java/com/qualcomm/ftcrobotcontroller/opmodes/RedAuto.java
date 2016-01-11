@@ -82,16 +82,21 @@ public class RedAuto extends LinearOpMode{
 
         drivetrain.arcadeDrive(0, 0);
         telemetry.addData("Step 5 Complete", ".");
-        /*
-        drivetrain.moveDistance(250, 0.5);
-        sleep(500);
-        */
+
+        telemetry.addData("Color: ", beaconScorer.getBeaconColor());
+
+        while(beaconScorer.getBeaconColor() == "Null"){}
+        drivetrain.arcadeDrive(0.3, 0);
+
+        drivetrain.arcadeDrive(0, 0);
+        telemetry.addData("In position to measure", ".");//telemetry.addData("Step 5 Complete", ".");
 
         climberScorer.score();
         sleep(1000);
         climberScorer.reset();
 
         beaconColor = beaconScorer.getBeaconColor();
+        telemetry.addData("Beacon color is: ", beaconColor);
 
         drivetrain.moveDistance(500, -0.5);
         telemetry.addData("Step 7 Complete", ".");
@@ -108,11 +113,17 @@ public class RedAuto extends LinearOpMode{
         }
         telemetry.addData("Step 8 Complete", ".");
 
-        drivetrain.moveDistance(750, 0.5);
-        telemetry.addData("Step 9 Complete", ".");
+        while(beaconScorer.getBeaconColor() == "Null"){}
+        drivetrain.arcadeDrive(0.3, 0);
+        telemetry.addData("Pressed Button", ".");
+        sleep(500);
+
+        drivetrain.moveDistance(750, -0.5);
+        telemetry.addData("Step 10 Complete", ".");
         sleep(500);
 
         beaconScorer.resetButtonPressers();
+        telemetry.addData("Step 11 Complete", ".");
     }
 
 }
