@@ -53,11 +53,14 @@ public class Drivetrain {
     }
 
     public void arcadeDrive(double throttle, double turn){
-        frontLeft.setPower(Range.clip(throttle - turn, -1, 1));
-        backLeft.setPower(Range.clip(throttle - turn, -1, 1));
+        double leftPower = Range.clip(throttle - turn, -1, 1);
+        double rightPower = Range.clip(throttle + turn, -1, 1);
 
-        frontRight.setPower(Range.clip(throttle + turn, -1, 1));
-        backRight.setPower(Range.clip(throttle + turn, -1, 1));
+        frontLeft.setPower(leftPower);
+        backLeft.setPower(leftPower);
+
+        frontRight.setPower(rightPower);
+        backRight.setPower(rightPower);
     }
 
     public void brake(){
@@ -136,40 +139,6 @@ public class Drivetrain {
         arcadeDrive(0, 0);
     }
 
-    public void turnDistance(int targetEncoderValue, double turn) throws InterruptedException {
-        resetEncoders();
-
-        while(Math.abs(getAverageEncoderValue("Left")) < Math.abs(targetEncoderValue) && Math.abs(getAverageEncoderValue("Right")) < Math.abs(targetEncoderValue))
-        {
-            arcadeDrive(0, turn);
-        }
-
-        arcadeDrive(0, 0);
-    }
-
-    public void turnLeftDistance(int targetEncoderValue, double speed) throws InterruptedException {
-        resetEncoders();
-
-        while(Math.abs(getAverageEncoderValue("Left")) < Math.abs(targetEncoderValue))
-        {
-            tankDrive(speed, 0);
-        }
-
-        arcadeDrive(0, 0);
-    }
-
-    public void turnRightDistance(int targetEncoderValue, double speed) throws InterruptedException {
-        resetEncoders();
-
-        while(Math.abs(getAverageEncoderValue("Right")) < Math.abs(targetEncoderValue))
-        {
-            tankDrive(0, speed);
-        }
-
-        arcadeDrive(0, 0);
-    }
-
-    /*
     public void turnAngle(int targetAngle, double speed){
 
         int currentHeading = gyro.getHeading();
@@ -183,32 +152,6 @@ public class Drivetrain {
         arcadeDrive(0, 0);
     }
 
-    public void turnLeftAngle(int targetAngle, double speed){
-
-        int currentHeading = gyro.getHeading();
-        int goalHeading = currentHeading + targetAngle;
-
-        speed = Math.copySign(speed, targetAngle);
-
-        while( (goalHeading - gyro.getHeading()) > headingTolerance){
-            tankDrive(speed, 0);
-        }
-        arcadeDrive(0, 0);
-    }
-
-    public void turnRightAngle(int targetAngle, double speed){
-
-        int currentHeading = gyro.getHeading();
-        int goalHeading = currentHeading + targetAngle;
-
-        speed = Math.copySign(speed, targetAngle);
-
-        while( (goalHeading - gyro.getHeading()) > headingTolerance){
-            tankDrive(0, speed);
-        }
-        arcadeDrive(0, 0);
-    }
-    */
 
     public void sleep(long milliseconds) throws InterruptedException {
         Thread.sleep(milliseconds);

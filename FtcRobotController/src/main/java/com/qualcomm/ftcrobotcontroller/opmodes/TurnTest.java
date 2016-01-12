@@ -32,6 +32,8 @@ public class TurnTest extends LinearOpMode {
 
 
         while (opModeIsActive()) {
+
+            /*
             while(drivetrain.getHeading() < 45 || drivetrain.getHeading() > 60) {
                 drivetrain.arcadeDrive(0, -1);
                 telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
@@ -40,6 +42,8 @@ public class TurnTest extends LinearOpMode {
             drivetrain.arcadeDrive(0, 0);
             telemetry.addData("Complete: ", "");
             sleep(5000);
+            */
+
             /*
             rotationalVelocity = gyro.rawZ();
             if(Math.abs(rotationalVelocity) > 5)
