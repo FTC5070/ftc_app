@@ -32,8 +32,8 @@ public class Drivetrain {
 
         gyro = hardwareMap.gyroSensor.get("gyro");
 
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
         resetEncoders();
 
@@ -138,6 +138,7 @@ public class Drivetrain {
 
         arcadeDrive(0, 0);
     }
+
 
     public void turnAngle(int targetAngle, double speed){
 
