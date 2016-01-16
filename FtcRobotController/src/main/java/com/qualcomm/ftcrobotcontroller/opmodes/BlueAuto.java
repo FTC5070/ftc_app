@@ -48,50 +48,50 @@ public class BlueAuto extends LinearOpMode{
         telemetry.addData("Start Autonomous", ".");
 
         intake.outward();
-        drivetrain.moveDistance(1500, .5);
+        drivetrain.moveDistance(1400, .5);
         telemetry.addData("Step 1 Complete", ".");
 
         sleep(500);
-        while(drivetrain.getHeading() > 315 || drivetrain.getHeading() < 305) {
-            drivetrain.arcadeDrive(0, 0.5);
-            telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
-        }
+        //drivetrain.turnAngle(-45, 0.5);
 
-        drivetrain.arcadeDrive(0, 0);
-        telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
-        telemetry.addData("Step 2 Complete", ".");
+        do{
+            drivetrain.arcadeDrive(0, 0.5);
+        }while(drivetrain.getHeading() < 53);
+
+       telemetry.addData("Step 2 Complete", ".");
         sleep(500);
 
         drivetrain.resetEncoders();
         sleep(500);
 
-        drivetrain.moveDistance(3200, 0.5);
+        drivetrain.moveDistance(6800, 0.5);
         telemetry.addData("Step 3 Complete", ".");
 
-        while(drivetrain.getHeading() > 270 || drivetrain.getHeading() < 260) {
-            drivetrain.arcadeDrive(0, -0.5);
-            telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
-        }
+        drivetrain.turnAngle(-45, 0.5);
 
-        drivetrain.arcadeDrive(0, 0);
-        telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
-        telemetry.addData("Step 4 Complete", ".");
+      telemetry.addData("Step 4 Complete", ".");
 
         intake.stop();
         sleep(500);
 
+        /*
         telemetry.addData("Color: ", beaconScorer.getBeaconColor());
 
         while(beaconScorer.getBeaconColor() == "Null"){}
             drivetrain.arcadeDrive(0.3, 0);
 
-        drivetrain.arcadeDrive(0, 0);
+        drivetrain.brake(0, 0);
         telemetry.addData("In position to measure", ".");//telemetry.addData("Step 5 Complete", ".");
+
+        */
+
+        drivetrain.moveDistance(1550, 0.5);
 
         climberScorer.score();
         sleep(1000);
         climberScorer.reset();
 
+        /*
         beaconColor = beaconScorer.getBeaconColor();
         telemetry.addData("Beacon color is: ", beaconColor);
 
@@ -121,6 +121,7 @@ public class BlueAuto extends LinearOpMode{
 
         beaconScorer.resetButtonPressers();
         telemetry.addData("Step 11 Complete", ".");
+        */
     }
 }
 

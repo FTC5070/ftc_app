@@ -16,7 +16,7 @@ public class Drivetrain {
     GyroSensor gyro;
 
     int heading = 0;
-    public int headingTolerance = 2;
+    public int headingTolerance = 5;
 
     double wheelCircumference = 6 * Math.PI;
     double ticksPerRotation = 1049;
@@ -32,15 +32,14 @@ public class Drivetrain {
 
         gyro = hardwareMap.gyroSensor.get("gyro");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
 
         resetEncoders();
 
         gyro.calibrate();
 
-        while (gyro.isCalibrating()) {}
-        Thread.sleep(50);
+        while (gyro.isCalibrating() || gyro.getHeading() != 0) {}
 
     }
 
@@ -64,10 +63,12 @@ public class Drivetrain {
     }
 
     public void brake(){
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
+        while(frontLeft.getPower() != 0 || frontRight.getPower() != 0 || backLeft.getPower() != 0 || backRight.getPower() != 0) {
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+        }
     }
 
     public void resetEncoders() throws InterruptedException {
@@ -117,26 +118,16 @@ public class Drivetrain {
         this.brake();
     }
 
-    public void moveDistance(int targetEncoderValue, double speed, double turn) throws InterruptedException {
-        resetEncoders();
-
-        while(Math.abs(getAverageEncoderValue("All")) < Math.abs(targetEncoderValue))
-        {
-            arcadeDrive(speed, turn);
-        }
-
-        arcadeDrive(0, 0);
-    }
 
     public void moveDistance(int targetEncoderValue, double speed) throws InterruptedException {
         resetEncoders();
 
         while(Math.abs(getAverageEncoderValue("All")) < Math.abs(targetEncoderValue))
         {
-            arcadeDrive(speed, 0);
+            tankDrive(speed, speed);
         }
 
-        arcadeDrive(0, 0);
+        brake();
     }
 
 
@@ -145,12 +136,11 @@ public class Drivetrain {
         int currentHeading = gyro.getHeading();
         int goalHeading = (currentHeading + targetAngle)%360;
 
-        speed = Math.abs(speed) * targetAngle/Math.abs(targetAngle);
-
-        while( Math.abs(goalHeading - gyro.getHeading()) > headingTolerance){
+        while(Math.abs(goalHeading-gyro.getHeading()) > headingTolerance)
+        {
             arcadeDrive(0, speed);
         }
-        arcadeDrive(0, 0);
+        brake();
     }
 
 

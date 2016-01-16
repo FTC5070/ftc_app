@@ -45,7 +45,7 @@ public class ClassifiedTeleOp extends OpMode{
         */
 
         //if (lift.isShiftedHigh) {
-        drivetrain.tankDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);//drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+        drivetrain.tankDrive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);//drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
         lift.setSpeed(-gamepad2.left_stick_y);
         /*} else {
             lift.setSpeed(gamepad2.left_stick_y * 3.0 / 4.0);

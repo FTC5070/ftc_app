@@ -52,13 +52,13 @@ public class RedAuto extends LinearOpMode{
         telemetry.addData("Step 1 Complete", ".");
 
         sleep(500);
+        drivetrain.turnAngle(45, -0.5);
+        /*
         while(drivetrain.getHeading() < 45 || drivetrain.getHeading() > 50) {
             drivetrain.arcadeDrive(0, -0.5);
             telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
         }
-
-        drivetrain.arcadeDrive(0, 0);
-        telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
+        */
         telemetry.addData("Step 2 Complete", ".");
         sleep(500);
 
@@ -68,18 +68,14 @@ public class RedAuto extends LinearOpMode{
         drivetrain.moveDistance(3800, 0.5);
         telemetry.addData("Step 3 Complete", ".");
 
-        while(drivetrain.getHeading() < 90 || drivetrain.getHeading() > 100) {
-            drivetrain.arcadeDrive(0, -0.5);
-            telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
-        }
+        drivetrain.turnAngle(45, 0.5);
 
-        drivetrain.arcadeDrive(0, 0);
-        telemetry.addData("Heading ", String.format("%03d", drivetrain.getHeading()));
         telemetry.addData("Step 4 Complete", ".");
 
         intake.stop();
         sleep(500);
 
+        /*
         drivetrain.arcadeDrive(0, 0);
         telemetry.addData("Step 5 Complete", ".");
 
@@ -124,6 +120,7 @@ public class RedAuto extends LinearOpMode{
 
         beaconScorer.resetButtonPressers();
         telemetry.addData("Step 11 Complete", ".");
+        */
     }
 
 }

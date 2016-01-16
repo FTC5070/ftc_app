@@ -29,9 +29,22 @@ public class TurnTest extends LinearOpMode {
 
         waitForStart();
 
+        telemetry.addData("Starting", "");
+        telemetry.addData("Initial Heading: ", drivetrain.getHeading());
 
+        while(Math.abs(90-drivetrain.getHeading()) > 5 && !gamepad1.a)//Math.abs(90-drivetrain.getHeading()) < 5)
+        {
+            drivetrain.arcadeDrive(0,0.5);
+            telemetry.addData("Running: ", drivetrain.getHeading());
+        }
+
+
+        drivetrain.brake();
+
+        telemetry.addData("Finished: ", drivetrain.getHeading());
 
         while (opModeIsActive()) {
+
 
             /*
             while(drivetrain.getHeading() < 45 || drivetrain.getHeading() > 60) {
