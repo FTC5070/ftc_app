@@ -45,11 +45,8 @@ public class BlueAuto extends LinearOpMode{
         sleep(1000);
         drivetrain.getHeading();
 
-        telemetry.addData("Start Autonomous", ".");
-
         intake.outward();
         drivetrain.moveDistance(1400, .5);
-        telemetry.addData("Step 1 Complete", ".");
 
         sleep(500);
         //drivetrain.turnAngle(-45, 0.5);
@@ -58,18 +55,14 @@ public class BlueAuto extends LinearOpMode{
             drivetrain.arcadeDrive(0, 0.5);
         }while(drivetrain.getHeading() < 53);
 
-       telemetry.addData("Step 2 Complete", ".");
-        sleep(500);
 
+        drivetrain.brake();
         drivetrain.resetEncoders();
         sleep(500);
 
         drivetrain.moveDistance(6800, 0.5);
-        telemetry.addData("Step 3 Complete", ".");
 
         drivetrain.turnAngle(-45, 0.5);
-
-      telemetry.addData("Step 4 Complete", ".");
 
         intake.stop();
         sleep(500);
