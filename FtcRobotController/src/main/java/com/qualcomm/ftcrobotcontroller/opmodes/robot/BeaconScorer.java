@@ -12,7 +12,7 @@ public class BeaconScorer {
 
     public Servo rightButtonServo;
     public Servo leftButtonServo;
-    public ColorSensor sensorRGB;
+    public ColorSensor colorSensor;
 
     double rightButtonServoPressed = 0.40;
     double leftButtonServoPressed = 0.60;
@@ -31,13 +31,13 @@ public class BeaconScorer {
 
     public void init(HardwareMap hardwareMap){
 
-        sensorRGB = hardwareMap.colorSensor.get("sensorRGB");
+        colorSensor = hardwareMap.colorSensor.get("colorSensor");
         rightButtonServo = hardwareMap.servo.get("rightButtonServo");
         leftButtonServo = hardwareMap.servo.get("leftButtonServo");
 
         rightButtonServo.setPosition(servoStop);
         leftButtonServo.setPosition(servoStop);
-        sensorRGB.enableLed(true);
+        colorSensor.enableLed(true);
 
     }
 
@@ -83,16 +83,16 @@ public class BeaconScorer {
 
     public String getBeaconColor() {
 
-        sensorRGB.enableLed(false);
+        colorSensor.enableLed(false);
 
-        if(sensorRGB.blue() == 0 && sensorRGB.red() == 0)
+        if(colorSensor.blue() == 0 && colorSensor.red() == 0)
             return "Null";
 
-        sensorRGB.enableLed(true);
+        colorSensor.enableLed(true);
 
-        if(sensorRGB.blue() > sensorRGB.red())
+        if(colorSensor.blue() > colorSensor.red())
             return "Blue";
-        else if(sensorRGB.red() > sensorRGB.blue())
+        else if(colorSensor.red() > colorSensor.blue())
             return "Red";
         else
             return "Null";

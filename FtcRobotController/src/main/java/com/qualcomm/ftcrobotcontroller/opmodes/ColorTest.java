@@ -8,27 +8,27 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  */
 public class ColorTest extends LinearOpMode {
 
-    ColorSensor sensorRGB;
+    ColorSensor colorSensor;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        sensorRGB = hardwareMap.colorSensor.get("sensorRGB");
+        colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
         waitForStart();
 
-        /*sensorRGB.enableLed(false);
+        /*colorSensor.enableLed(false);
         waitOneFullHardwareCycle();
         sleep(1000);
-        sensorRGB.enableLed(true);
+        colorSensor.enableLed(true);
         waitOneFullHardwareCycle();*/
 
         while(opModeIsActive()){
-            sensorRGB.enableLed(gamepad1.x);
+            colorSensor.enableLed(gamepad1.x);
 
-            if(sensorRGB.blue() > sensorRGB.red())
+            if(colorSensor.blue() > colorSensor.red())
                 telemetry.addData("Color: ", "Blue");
-            else if(sensorRGB.red() > sensorRGB.blue())
+            else if(colorSensor.red() > colorSensor.blue())
                 telemetry.addData("Color: ", "Red");
             else
                 telemetry.addData("Color: ", "Null");
