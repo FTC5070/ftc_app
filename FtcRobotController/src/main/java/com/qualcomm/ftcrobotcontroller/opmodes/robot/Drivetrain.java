@@ -16,7 +16,7 @@ public class Drivetrain {
     GyroSensor gyro;
 
     int heading = 0;
-    public int headingTolerance = 5;
+    public int headingTolerance = 1;
 
     double wheelCircumference = 6 * Math.PI;
     double ticksPerRotation = 1049;
@@ -52,8 +52,8 @@ public class Drivetrain {
     }
 
     public void arcadeDrive(double throttle, double turn){
-        double leftPower = Range.clip(throttle - turn, -1, 1);
-        double rightPower = Range.clip(throttle + turn, -1, 1);
+        double leftPower = Range.clip(throttle + turn, -1, 1);
+        double rightPower = Range.clip(throttle - turn, -1, 1);
 
         frontLeft.setPower(leftPower);
         backLeft.setPower(leftPower);
@@ -101,7 +101,8 @@ public class Drivetrain {
         }
     }
 
-    public int getHeading(){
+
+    public int getHeading() {
         return gyro.getHeading();
     }
 
@@ -131,18 +132,41 @@ public class Drivetrain {
     }
 
 
-    public void turnAngle(int targetAngle, double speed){
+    public void turnAngle(int targetAngle, double speed) {
 
         int currentHeading = gyro.getHeading();
-        int goalHeading = (currentHeading + targetAngle)%360;
+        int goalHeading = (currentHeading + targetAngle) % 360;
 
-        while(Math.abs(goalHeading-gyro.getHeading()) > headingTolerance)
-        {
+        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance) {
             arcadeDrive(0, speed);
         }
+
         brake();
     }
 
+    public void turnAngleRight(int targetAngle, double speed) {
+
+        int currentHeading = gyro.getHeading();
+        int goalHeading = (currentHeading + targetAngle) % 360;
+
+        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance) {
+            tankDrive(speed, 0);
+        }
+
+        brake();
+    }
+
+    public void turnAngleLeft(int targetAngle, double speed) {
+
+        int currentHeading = gyro.getHeading();
+        int goalHeading = (currentHeading + targetAngle) % 360;
+
+        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance) {
+            arcadeDrive(speed, 0);
+        }
+
+        brake();
+    }
 
     public void sleep(long milliseconds) throws InterruptedException {
         Thread.sleep(milliseconds);
