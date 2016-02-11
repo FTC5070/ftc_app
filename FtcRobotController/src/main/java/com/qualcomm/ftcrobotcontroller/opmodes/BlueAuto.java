@@ -30,91 +30,38 @@ public class BlueAuto extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
 
         drivetrain.init(hardwareMap);
-        telemetry.addData("Drivetrain Init Complete", "");
         intake.init(hardwareMap);
-        telemetry.addData("Intake Init Complete", "");
         beaconScorer.init(hardwareMap);
-        telemetry.addData("Beacon Scorer Init Complete", "");
         climberScorer.init(hardwareMap);
-        telemetry.addData("Climber Servo Init Complete", "");
         dumper.init(hardwareMap);
-        telemetry.addData("Dumper Init Complete", "");
+        telemetry.addData("Initialization Complete", "");
 
         waitForStart();
 
         sleep(1000);
         drivetrain.getHeading();
 
+        telemetry.addData("Start Autonomous", ".");
+
         intake.outward();
-        drivetrain.moveDistance(1400, .5);
 
-        sleep(500);
-        //drivetrain.turnAngle(-45, 0.5);
+        drivetrain.moveDistance(2800, .25);
+        sleep(1000);
+        drivetrain.turnAngleRight(45, 0.25);
+        sleep(1000);
+        drivetrain.moveDistance(4200, .25);
+        sleep(1000);
+        drivetrain.turnAngleRight(45, 0.25);
 
-        do{
-            drivetrain.arcadeDrive(0, 0.5);
-        }while(drivetrain.getHeading() < 53);
-
-
+        while(drivetrain.getHeading() > 90)
+            drivetrain.tankDrive(0, 0.2);
         drivetrain.brake();
-        drivetrain.resetEncoders();
-        sleep(500);
-
-        drivetrain.moveDistance(6800, 0.5);
-
-        drivetrain.turnAngle(-45, 0.5);
 
         intake.stop();
-        sleep(500);
 
-        /*
-        telemetry.addData("Color: ", beaconScorer.getBeaconColor());
-
-        while(beaconScorer.getBeaconColor() == "Null"){}
-            drivetrain.arcadeDrive(0.3, 0);
-
-        drivetrain.brake(0, 0);
-        telemetry.addData("In position to measure", ".");//telemetry.addData("Step 5 Complete", ".");
-
-        */
-
-        drivetrain.moveDistance(1550, 0.5);
-
-        climberScorer.score();
         sleep(1000);
-        climberScorer.reset();
-
-        /*
-        beaconColor = beaconScorer.getBeaconColor();
-        telemetry.addData("Beacon color is: ", beaconColor);
-
-        drivetrain.moveDistance(800, -0.5);
-        telemetry.addData("Step 7 Complete", ".");
-        sleep(500);
-
-        if(beaconColor == "Red") {
-            beaconScorer.pressRightButton();
-        }
-        else if(beaconColor == "Blue") {
-            beaconScorer.pressLeftButton();
-        }
-        else {
-            telemetry.addData("ERROR!", "Could not read beacon color!");
-        }
-        telemetry.addData("Step 8 Complete", ".");
-
-        while(beaconScorer.getBeaconColor() == "Null"){}
-            drivetrain.arcadeDrive(0.3, 0);
-        telemetry.addData("Pressed Button", ".");
-        sleep(500);
-
-        drivetrain.moveDistance(750, -0.5);
-        telemetry.addData("Step 10 Complete", ".");
-        sleep(500);
-
-        beaconScorer.resetButtonPressers();
-        telemetry.addData("Step 11 Complete", ".");
-        */
+        drivetrain.moveDistance(1000, .25);
+        telemetry.addData("Heading: " , drivetrain.getHeading());
     }
 }
 
