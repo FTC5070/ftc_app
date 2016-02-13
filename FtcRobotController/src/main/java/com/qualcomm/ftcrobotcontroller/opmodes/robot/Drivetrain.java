@@ -2,12 +2,14 @@ package com.qualcomm.ftcrobotcontroller.opmodes.robot;
 
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
-
+import com.qualcomm.robotcore.robocol.*;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 /**
  * Created by Carlos on 11/12/2015.
  */
 public class Drivetrain {
 
+    Telemetry telemetry = new Telemetry();
     public DcMotor frontLeft;
     public DcMotor backLeft;
     public DcMotor frontRight;
@@ -16,7 +18,7 @@ public class Drivetrain {
     GyroSensor gyro;
 
     int heading = 0;
-    public int headingTolerance = 1;
+    public int headingTolerance = 2;
 
     double wheelCircumference = 6 * Math.PI;
     double ticksPerRotation = 1049;
@@ -120,49 +122,64 @@ public class Drivetrain {
     }
 
 
-    public void moveDistance(int targetEncoderValue, double speed) throws InterruptedException {
+    public void moveDistance(int targetEncoderValue, double speed, LinearOpMode auto) throws InterruptedException {
         resetEncoders();
 
-        while(Math.abs(getAverageEncoderValue("All")) < Math.abs(targetEncoderValue))
+        while(Math.abs(getAverageEncoderValue("All")) < Math.abs(targetEncoderValue) && auto.opModeIsActive())
         {
             tankDrive(speed, speed);
         }
 
+
         brake();
     }
 
 
-    public void turnAngle(int targetAngle, double speed) {
+    public void turnAngle(int targetAngle, double speed, LinearOpMode auto) {
 
         int currentHeading = gyro.getHeading();
         int goalHeading = (currentHeading + targetAngle) % 360;
 
-        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance) {
+        if(goalHeading < 0)
+            goalHeading += 360;
+
+        //telemetry.addData("Goal Heading: ", goalHeading);
+
+        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance && auto.opModeIsActive()) {
             arcadeDrive(0, speed);
+            //telemetry.addData("Current Heading: ", gyro.getHeading());
         }
 
+        //telemetry.addData(" ", "Turn Complete");
+
         brake();
     }
 
-    public void turnAngleRight(int targetAngle, double speed) {
+    public void turnAngleRight(int targetAngle, double speed, LinearOpMode auto) {
 
         int currentHeading = gyro.getHeading();
         int goalHeading = (currentHeading + targetAngle) % 360;
 
-        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance) {
+        if(goalHeading < 0)
+            goalHeading += 360;
+
+        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance && auto.opModeIsActive()) {
             tankDrive(speed, 0);
         }
 
         brake();
     }
 
-    public void turnAngleLeft(int targetAngle, double speed) {
+    public void turnAngleLeft(int targetAngle, double speed, LinearOpMode auto) {
 
         int currentHeading = gyro.getHeading();
         int goalHeading = (currentHeading + targetAngle) % 360;
 
-        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance) {
-            arcadeDrive(speed, 0);
+        if(goalHeading < 0)
+            goalHeading += 360;
+
+        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance && auto.opModeIsActive()) {
+            tankDrive(0, speed);
         }
 
         brake();

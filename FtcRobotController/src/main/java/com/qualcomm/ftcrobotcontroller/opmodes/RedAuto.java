@@ -44,7 +44,7 @@ public class RedAuto extends LinearOpMode{
         telemetry.addData("Start Autonomous", ".");
 
         //drivetrain.moveDistance(2600, .5);
-        drivetrain.turnAngle(-45, 0.5);
+        drivetrain.turnAngle(-45, 0.5, RedAuto.this);
 
     }
 

@@ -3,12 +3,6 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.ftcrobotcontroller.opmodes.robot.*;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Hardware;
-import com.qualcomm.robotcore.util.Range;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,31 +32,43 @@ public class BlueAuto extends LinearOpMode{
 
         waitForStart();
 
-        sleep(1000);
+        sleep(500);
         drivetrain.getHeading();
 
         telemetry.addData("Start Autonomous", ".");
 
         intake.outward();
 
-        drivetrain.moveDistance(2800, .25);
-        sleep(1000);
-        drivetrain.turnAngleRight(45, 0.25);
-        sleep(1000);
-        drivetrain.moveDistance(4200, .25);
-        sleep(1000);
-        drivetrain.turnAngleRight(45, 0.25);
+        drivetrain.moveDistance(2800, .3, BlueAuto.this);
+        sleep(500);
+
+        drivetrain.turnAngleRight(45, 0.3, BlueAuto.this);
+        sleep(500);
+
+        drivetrain.moveDistance(4550, .3, BlueAuto.this);
+        sleep(500);
+
+        drivetrain.turnAngleRight(45, 0.3, BlueAuto.this);
+        intake.stop();
+        sleep(500);
 
         while(drivetrain.getHeading() > 90)
             drivetrain.tankDrive(0, 0.2);
-        drivetrain.brake();
 
-        intake.stop();
+        drivetrain.moveDistance(1300, .25, BlueAuto.this);
 
+        climberScorer.score();
         sleep(1000);
-        drivetrain.moveDistance(1000, .25);
-        telemetry.addData("Heading: " , drivetrain.getHeading());
+        climberScorer.reset();
+
+        drivetrain.moveDistance(1000, -.25, BlueAuto.this);
+        sleep(500);
+
+        drivetrain.turnAngle(-90, -0.3, BlueAuto.this);
+        sleep(500);
+
+        telemetry.addData("Heading: ", drivetrain.getHeading());
+
+        opModeIsActive();
     }
 }
-
-
