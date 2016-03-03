@@ -50,7 +50,7 @@ public class StraightAuto extends LinearOpMode{
         telemetry.addData("Start Autonomous", ".");
 
         intake.outward();
-        drivetrain.moveDistance(3500, .5);
+        //drivetrain.moveDistance(3500, .5);
         intake.stop();
         telemetry.addData("Step 1 Complete", ".");
 

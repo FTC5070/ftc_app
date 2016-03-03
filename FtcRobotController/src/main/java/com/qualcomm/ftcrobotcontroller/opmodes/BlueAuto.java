@@ -32,7 +32,6 @@ public class BlueAuto extends LinearOpMode{
 
         waitForStart();
 
-        sleep(500);
         drivetrain.getHeading();
 
         telemetry.addData("Start Autonomous", ".");
@@ -55,20 +54,22 @@ public class BlueAuto extends LinearOpMode{
         while(drivetrain.getHeading() > 90)
             drivetrain.tankDrive(0, 0.2);
 
+        drivetrain.brake();
+
         drivetrain.moveDistance(1300, .25, BlueAuto.this);
 
         climberScorer.score();
         sleep(1000);
         climberScorer.reset();
 
-        drivetrain.moveDistance(1000, -.25, BlueAuto.this);
+        drivetrain.moveDistance(500, -.25, BlueAuto.this);
         sleep(500);
 
+        /*
         drivetrain.turnAngle(-90, -0.3, BlueAuto.this);
         sleep(500);
 
         telemetry.addData("Heading: ", drivetrain.getHeading());
-
-        opModeIsActive();
+        */
     }
 }

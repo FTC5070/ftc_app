@@ -63,7 +63,7 @@ public class BeaconAuto extends LinearOpMode{
         telemetry.addData("Beacon color is: ", beaconColor);
 
 
-        drivetrain.moveDistance(800, -0.5);
+        //drivetrain.moveDistance(800, -0.5);
         telemetry.addData("Moved Back", "");
         sleep(500);
 
@@ -83,7 +83,7 @@ public class BeaconAuto extends LinearOpMode{
         telemetry.addData("Pressed Button", "");
         sleep(500);
 
-        drivetrain.moveDistance(750, -0.5);
+        //drivetrain.moveDistance(750, -0.5);
         telemetry.addData("Moved Back", ".");
         sleep(500);
 

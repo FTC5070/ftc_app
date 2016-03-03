@@ -38,14 +38,39 @@ public class RedAuto extends LinearOpMode{
 
         waitForStart();
 
-        sleep(1000);
+        sleep(500);
         drivetrain.getHeading();
 
         telemetry.addData("Start Autonomous", ".");
 
-        //drivetrain.moveDistance(2600, .5);
-        drivetrain.turnAngle(-45, 0.5, RedAuto.this);
+        intake.outward();
 
+        drivetrain.moveDistance(2800, .3, RedAuto.this);
+        sleep(500);
+
+        drivetrain.turnAngleLeft(-45, 0.3, RedAuto.this);
+        sleep(500);
+
+        drivetrain.moveDistance(4550, .3, RedAuto.this);
+        sleep(500);
+
+        drivetrain.turnAngleLeft(-45, 0.3, RedAuto.this);
+        intake.stop();
+        sleep(500);
+
+        while(drivetrain.getHeading() < 90)
+            drivetrain.tankDrive(0.2, 0);
+
+        drivetrain.brake();
+
+        drivetrain.moveDistance(1300, .25, RedAuto.this);
+
+        climberScorer.score();
+        sleep(1000);
+        climberScorer.reset();
+
+        drivetrain.moveDistance(500, -.25, RedAuto.this);
+        sleep(500);
     }
 
 }

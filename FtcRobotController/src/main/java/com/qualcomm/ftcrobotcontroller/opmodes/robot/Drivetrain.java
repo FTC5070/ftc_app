@@ -130,6 +130,8 @@ public class Drivetrain {
             tankDrive(speed, speed);
         }
 
+        if(!auto.opModeIsActive())
+            return;
 
         brake();
     }
@@ -149,6 +151,9 @@ public class Drivetrain {
             arcadeDrive(0, speed);
             //telemetry.addData("Current Heading: ", gyro.getHeading());
         }
+
+        if(!auto.opModeIsActive())
+            return;
 
         //telemetry.addData(" ", "Turn Complete");
 
