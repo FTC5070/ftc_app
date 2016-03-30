@@ -8,94 +8,81 @@ import java.util.concurrent.TimeUnit;
  * Created by Nikhil on 11/13/2015.
  */
 public class BeaconScorer {
+    Servo leftButtonServo;
+    double leftButtonInitPosition;
+    double leftButtonPressedPosition;
 
+    Servo rightButtonServo;
+    double rightButtonInitPosition;
+    double rightButtonPressedPosition;
 
-    public Servo rightButtonServo;
-    public Servo leftButtonServo;
-    public ColorSensor colorSensor;
+    ColorSensor leftColorSensor;
+    ColorSensor rightColorSensor;
 
-    double rightButtonServoPressed = 0.40;
-    double leftButtonServoPressed = 0.60;
-    double leftButtonServoReset = 0.40;
-    double rightButtonServoReset = 0.60;
-    
-    boolean rightIsPressed = false;
-    boolean leftIsPressed = false;
-
-    double servoStop = 0.5;
-
-    long turnTime = 870;
+    long pressDelay = 50;
 
     public BeaconScorer(){
     }
 
     public void init(HardwareMap hardwareMap){
-
-        colorSensor = hardwareMap.colorSensor.get("colorSensor");
-        rightButtonServo = hardwareMap.servo.get("rightButtonServo");
         leftButtonServo = hardwareMap.servo.get("leftButtonServo");
+        rightButtonServo = hardwareMap.servo.get("rightButtonServo");
+        leftColorSensor = hardwareMap.colorSensor.get("leftSideBeaconColorSensor");
+        rightColorSensor = hardwareMap.colorSensor.get("rightSideBeaconColorSensor");
 
-        rightButtonServo.setPosition(servoStop);
-        leftButtonServo.setPosition(servoStop);
-        colorSensor.enableLed(true);
-
+        leftButtonServo.setPosition(leftButtonInitPosition);
+        rightButtonServo.setPosition(rightButtonInitPosition);
     }
 
-    public void pressRightButton() throws InterruptedException {
-
-        if(!rightIsPressed) {
-            rightButtonServo.setPosition(rightButtonServoPressed);
-            TimeUnit.MILLISECONDS.sleep(turnTime);
-            rightButtonServo.setPosition(servoStop);
-            rightIsPressed = true;
-        }
+    public void pressLeftSideButton() throws InterruptedException {
+        leftButtonServo.setPosition(leftButtonPressedPosition);
+        sleep(pressDelay);
+        leftButtonServo.setPosition(leftButtonInitPosition);
     }
 
-    public void pressLeftButton() throws InterruptedException {
-
-        if(!leftIsPressed) {
-            leftButtonServo.setPosition(leftButtonServoPressed);
-            TimeUnit.MILLISECONDS.sleep(turnTime);
-            leftButtonServo.setPosition(servoStop);
-            leftIsPressed = true;
-        }
-
+    public void pressRightSideButton() throws InterruptedException {
+        rightButtonServo.setPosition(rightButtonPressedPosition);
+        sleep(pressDelay);
+        rightButtonServo.setPosition(rightButtonInitPosition);
     }
 
-    public void resetButtonPressers() throws InterruptedException {
 
-        if(leftIsPressed) {
-            leftButtonServo.setPosition(leftButtonServoReset);
-            TimeUnit.MILLISECONDS.sleep(turnTime);
-            leftButtonServo.setPosition(servoStop);
-            leftIsPressed = false;
-        }
-        
-        if(rightIsPressed) {
-            rightButtonServo.setPosition(rightButtonServoReset);
-            TimeUnit.MILLISECONDS.sleep(turnTime);
-            leftButtonServo.setPosition(servoStop);
-            rightIsPressed = false;
-        }
+    public String getLeftSideBeaconColor() {
 
-        rightButtonServo.setPosition(servoStop);
-    }
+        leftColorSensor.enableLed(false);
 
-    public String getBeaconColor() {
-
-        colorSensor.enableLed(false);
-
-        if(colorSensor.blue() == 0 && colorSensor.red() == 0)
+        if(leftColorSensor.blue() == 0 && leftColorSensor.red() == 0)
             return "Null";
 
-        colorSensor.enableLed(true);
+        leftColorSensor.enableLed(true);
 
-        if(colorSensor.blue() > colorSensor.red())
+        if(leftColorSensor.blue() > leftColorSensor.red())
             return "Blue";
-        else if(colorSensor.red() > colorSensor.blue())
+        else if(leftColorSensor.red() > leftColorSensor.blue())
             return "Red";
         else
             return "Null";
+    }
+
+    public String getRightSideBeaconColor() {
+
+        rightColorSensor.enableLed(false);
+
+        if(rightColorSensor.blue() == 0 && rightColorSensor.red() == 0)
+            return "Null";
+
+        rightColorSensor.enableLed(true);
+
+        if(rightColorSensor.blue() > rightColorSensor.red())
+            return "Blue";
+        else if(rightColorSensor.red() > rightColorSensor.blue())
+            return "Red";
+        else
+            return "Null";
+    }
+
+    public void sleep(long milliseconds) throws InterruptedException {
+        Thread.sleep(milliseconds);
     }
 }
 
