@@ -38,16 +38,16 @@ public class BlueAuto extends LinearOpMode{
 
         intake.outward();
 
-        drivetrain.moveDistance(2800, .3, BlueAuto.this);
+        drivetrain.moveDistance(2800, .3);
         sleep(500);
 
-        drivetrain.turnAngleRight(45, 0.3, BlueAuto.this);
+        drivetrain.turnAngleRight(45, 0.3);
         sleep(500);
 
-        drivetrain.moveDistance(4550, .3, BlueAuto.this);
+        drivetrain.moveDistance(4550, .3);
         sleep(500);
 
-        drivetrain.turnAngleRight(45, 0.3, BlueAuto.this);
+        drivetrain.turnAngleRight(45, 0.3);
         intake.stop();
         sleep(500);
 
@@ -56,17 +56,17 @@ public class BlueAuto extends LinearOpMode{
 
         drivetrain.brake();
 
-        drivetrain.moveDistance(1300, .25, BlueAuto.this);
+        drivetrain.moveDistance(1300, .25);
 
         climberScorer.score();
         sleep(1000);
         climberScorer.reset();
 
-        drivetrain.moveDistance(500, -.25, BlueAuto.this);
+        drivetrain.moveDistance(500, -.25);
         sleep(500);
 
         /*
-        drivetrain.turnAngle(-90, -0.3, BlueAuto.this);
+        drivetrain.turnAngle(-90, -0.3);
         sleep(500);
 
         telemetry.addData("Heading: ", drivetrain.getHeading());

@@ -45,34 +45,53 @@ public class RedAuto extends LinearOpMode{
 
         intake.outward();
 
-        drivetrain.moveDistance(2800, .3, RedAuto.this);
+        drivetrain.moveDistance(2650, 0.3);//2800, .3, RedAuto.this);
         sleep(500);
 
-        drivetrain.turnAngleLeft(-45, 0.3, RedAuto.this);
+        drivetrain.turnAngleLeft(-45, 0.3);
         sleep(500);
 
-        drivetrain.moveDistance(4550, .3, RedAuto.this);
+        //drivetrain.moveDistance(4250, 0.3);//4550, .3, RedAuto.this);
+        //sleep(500);
+
+        drivetrain.moveDistance(2000, 0.2);
         sleep(500);
 
-        drivetrain.turnAngleLeft(-45, 0.3, RedAuto.this);
+        drivetrain.turnAngleLeft(-110, -0.3);
+        sleep(500);
+
+        drivetrain.turnAngleLeft(110, 0.3);
+        sleep(500);
+
+        drivetrain.moveDistance(2250, 0.2);
+        sleep(500);
+
+
+        drivetrain.turnAngleLeft(-45, 0.3);
         intake.stop();
         sleep(500);
 
-        while(drivetrain.getHeading() < 90)
-            drivetrain.tankDrive(0.2, 0);
-
         drivetrain.brake();
 
-        drivetrain.moveDistance(1300, .25, RedAuto.this);
 
+        while(drivetrain.getHeading() < 270)
+            drivetrain.tankDrive(0.2, 0);
+
+        sleep(50);
+
+        telemetry.addData("Before Final Move","");
+        drivetrain.moveDistance(2100, 0.20);//1300, .25);
+        sleep(500);
+
+        telemetry.addData("After Final Move:", "");
+        
         climberScorer.score();
         sleep(1000);
         climberScorer.reset();
 
-        drivetrain.moveDistance(500, -.25, RedAuto.this);
+        drivetrain.moveDistance(500, -.25);
         sleep(500);
     }
-
 }
 
 
