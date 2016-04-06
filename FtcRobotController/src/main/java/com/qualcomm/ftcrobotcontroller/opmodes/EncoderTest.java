@@ -21,17 +21,20 @@ public class EncoderTest extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive())  {
+        while (opModeIsActive()) {
 
-            drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+            if(gamepad1.right_bumper)
+                drivetrain.tankDrive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
+            else
+                drivetrain.arcadeDrive(-gamepad1.left_stick_y, gamepad1.right_stick_x);
 
             frontLeftValue = drivetrain.frontLeft.getCurrentPosition();
             frontRightValue = drivetrain.frontRight.getCurrentPosition();
             backLeftValue = drivetrain.backLeft.getCurrentPosition();
             backRightValue = drivetrain.backRight.getCurrentPosition();
-            averageValue = (frontLeftValue + frontRightValue + backLeftValue +  backRightValue) / 4;
+            averageValue = (frontLeftValue + frontRightValue + backLeftValue + backRightValue) / 4;
 
-            if(gamepad1.a)
+            if (gamepad1.a)
                 drivetrain.resetEncoders();
 
             telemetry.addData("Front Left:", frontLeftValue);
@@ -41,7 +44,5 @@ public class EncoderTest extends LinearOpMode {
             telemetry.addData("Average Value:", averageValue);
 
         }
-
-
     }
 }

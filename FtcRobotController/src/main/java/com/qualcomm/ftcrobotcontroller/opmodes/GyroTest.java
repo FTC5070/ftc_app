@@ -35,9 +35,9 @@ public class GyroTest  extends LinearOpMode {
         while (opModeIsActive())  {
 
             if(gamepad1.right_bumper)
-                drivetrain.tankDrive(gamepad1.left_stick_y,gamepad1.right_stick_y);
+                drivetrain.tankDrive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
             else
-                drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+                drivetrain.arcadeDrive(-gamepad1.left_stick_y, gamepad1.right_stick_x);
 
 
             if(gamepad1.a && gamepad1.b)  {
