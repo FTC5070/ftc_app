@@ -10,46 +10,53 @@ import java.util.TimerTask;
  * Created by Carlos on 11/13/2015.
  */
 public class Dumper {
-    public Servo servo;
 
+    Servo leftFlap;
+    double leftFlapOpenPosition;
+    double leftFlapClosedPosition;
 
-    double initPosition = 0.50;
-    double rightPosition = 0.14;
-    double leftPosition = 0.86;
-    double maxIncrement = 1;//0.05;
+    Servo rightFlap;
+    double rightFlapOpenPosition;
+    double rightFlapClosedPosition;
 
-    public double currentPosition = initPosition;
+    DcMotor motor;
+    int motorLeftPostion;
+    int motorInitPosition;
+    int motorRightPosition;
+
+    int targetPosition = 0;
+    int error = 0;
+    double KP = 0.05;
+    int ERROR_TOLERANCE = 5;
 
     public Dumper(){
     }
 
     public void init(HardwareMap hardwareMap){
 
-        servo = hardwareMap.servo.get("dumperServo");
-        servo.setPosition(initPosition);
+        motor = hardwareMap.dcMotor.get("dumperServo");
+        leftFlap = hardwareMap.servo.get("leftFlapServo");
+        rightFlap = hardwareMap.servo.get("rightFlapServo");
 
-    }
-    public void move(double increment){
-        if(Math.abs(increment) > maxIncrement)
-            increment = Math.signum(increment)*maxIncrement;
-
-        currentPosition = Range.clip(currentPosition + increment, -1, 1);
-        servo.setPosition(currentPosition);
+        leftFlap.setPosition(leftFlapClosedPosition);
+        rightFlap.setPosition(rightFlapClosedPosition);
     }
 
-    public void reset(){
-        currentPosition = initPosition;
-        servo.setPosition(currentPosition);
+    public void setPosition(int position){
+
+        targetPosition = position;
+
+        do {
+            if (Math.abs(error) > ERROR_TOLERANCE)
+                error = targetPosition - motor.getCurrentPosition();
+            else
+                error = 0;
+
+            motor.setPower(error * KP);
+        }
+        while(Math.abs(error) > ERROR_TOLERANCE);
     }
 
-    public void sweepLeft(){
-        currentPosition = leftPosition;
-        servo.setPosition(currentPosition);
-    }
 
-    public void sweepRight(){
-        currentPosition = rightPosition;
-        servo.setPosition(currentPosition);
-    }
 
 }
