@@ -27,15 +27,15 @@ public class Drivetrain {
     }
 
     public void init(HardwareMap hardwareMap) throws InterruptedException {
-        frontLeft = hardwareMap.dcMotor.get("leftMotor1");
-        backLeft = hardwareMap.dcMotor.get("leftMotor2");
-        frontRight = hardwareMap.dcMotor.get("rightMotor1");
-        backRight = hardwareMap.dcMotor.get("rightMotor2");
+        frontLeft = hardwareMap.dcMotor.get("frontLeft");
+        backLeft = hardwareMap.dcMotor.get("backLeft");
+        frontRight = hardwareMap.dcMotor.get("frontRight");
+        backRight = hardwareMap.dcMotor.get("backRight");
 
         gyro = hardwareMap.gyroSensor.get("gyro");
 
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
         resetEncoders();
 
@@ -154,7 +154,22 @@ public class Drivetrain {
         brake();
     }
 
-    public void turnAngleRight(int targetAngle, double speed) {
+    public void turnAngleRightSide(int targetAngle, double speed) {
+
+        int currentHeading = gyro.getHeading();
+        int goalHeading = (currentHeading + targetAngle) % 360;
+
+        if(goalHeading < 0)
+            goalHeading += 360;
+
+        while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance) {
+            tankDrive(0, speed);
+        }
+
+        brake();
+    }
+
+    public void turnAngleLeftSide(int targetAngle, double speed) {
 
         int currentHeading = gyro.getHeading();
         int goalHeading = (currentHeading + targetAngle) % 360;
@@ -167,18 +182,9 @@ public class Drivetrain {
         }
 
         brake();
-    }
-
-    public void turnAngleLeft(int targetAngle, double speed) {
-
-        int currentHeading = gyro.getHeading();
-        int goalHeading = (currentHeading + targetAngle) % 360;
-
-        if(goalHeading < 0)
-            goalHeading += 360;
 
         while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance) {
-            tankDrive(0, speed);
+            tankDrive(-speed, 0);
         }
 
         brake();
