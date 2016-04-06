@@ -48,6 +48,7 @@ public class RedAuto extends LinearOpMode{
         drivetrain.moveDistance(2650, 0.3);//2800, .3, RedAuto.this);
         sleep(500);
 
+        /*
         drivetrain.turnAngleLeft(-45, 0.3);
         sleep(500);
 
@@ -85,12 +86,13 @@ public class RedAuto extends LinearOpMode{
 
         telemetry.addData("After Final Move:", "");
         
-        climberScorer.score();
+        //climberScorer.score();
         sleep(1000);
-        climberScorer.reset();
+        //climberScorer.reset();
 
         drivetrain.moveDistance(500, -.25);
         sleep(500);
+        */
     }
 }
 

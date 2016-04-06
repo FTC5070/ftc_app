@@ -12,10 +12,10 @@ import java.util.concurrent.TimeUnit;
 public class BlueAuto extends LinearOpMode{
 
     Drivetrain drivetrain = new Drivetrain();
-    Intake intake = new Intake();
-    BeaconScorer beaconScorer = new BeaconScorer();
-    ClimberScorer climberScorer = new ClimberScorer();
-    Dumper dumper = new Dumper();
+    //Intake intake = new Intake();
+    //BeaconScorer beaconScorer = new BeaconScorer();
+    //ClimberScorer climberScorer = new ClimberScorer();
+    //Dumper dumper = new Dumper();
 
     String beaconColor;
 
@@ -24,10 +24,10 @@ public class BlueAuto extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
 
         drivetrain.init(hardwareMap);
-        intake.init(hardwareMap);
-        beaconScorer.init(hardwareMap);
-        climberScorer.init(hardwareMap);
-        dumper.init(hardwareMap);
+        //intake.init(hardwareMap);
+        //beaconScorer.init(hardwareMap);
+        //climberScorer.init(hardwareMap);
+        //dumper.init(hardwareMap);
         telemetry.addData("Initialization Complete", "");
 
         waitForStart();
@@ -36,40 +36,18 @@ public class BlueAuto extends LinearOpMode{
 
         telemetry.addData("Start Autonomous", ".");
 
-        intake.outward();
+        //intake.outward();
 
-        drivetrain.moveDistance(2800, .3);
+        //drivetrain.moveDistance(1430, .4);
+        //sleep(500);
+
+        telemetry.addData("Initial Heading: ", drivetrain.getHeading());
+        drivetrain.turnAngleLeftSide(45, 0.2);
         sleep(500);
+        telemetry.addData("Final Heading: ", drivetrain.getHeading());
 
-        drivetrain.turnAngleRight(45, 0.3);
-        sleep(500);
+        //drivetrain.moveDistance(2500 ,0.4);
 
-        drivetrain.moveDistance(4550, .3);
-        sleep(500);
 
-        drivetrain.turnAngleRight(45, 0.3);
-        intake.stop();
-        sleep(500);
-
-        while(drivetrain.getHeading() > 90)
-            drivetrain.tankDrive(0, 0.2);
-
-        drivetrain.brake();
-
-        drivetrain.moveDistance(1300, .25);
-
-        climberScorer.score();
-        sleep(1000);
-        climberScorer.reset();
-
-        drivetrain.moveDistance(500, -.25);
-        sleep(500);
-
-        /*
-        drivetrain.turnAngle(-90, -0.3);
-        sleep(500);
-
-        telemetry.addData("Heading: ", drivetrain.getHeading());
-        */
     }
 }

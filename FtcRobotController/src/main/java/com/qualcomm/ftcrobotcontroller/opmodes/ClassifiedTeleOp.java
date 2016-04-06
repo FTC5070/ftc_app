@@ -10,29 +10,29 @@ import com.qualcomm.robotcore.util.Range;
  */
 public class ClassifiedTeleOp extends OpMode{
 
-
-    Lift lift = new Lift();
+    //Lift lift = new Lift();
     Drivetrain drivetrain = new Drivetrain();
-    Intake intake = new Intake();
-    Dumper dumper = new Dumper();
-    ZiplineScorer ziplineScorer = new ZiplineScorer();
-    ClimberScorer climberScorer = new ClimberScorer();
-    BeaconScorer beaconScorer = new BeaconScorer();
-
+    //Intake intake = new Intake();
+    //Dumper dumper = new Dumper();
+    //ZiplineScorer ziplineScorer = new ZiplineScorer();
+    //ClimberScorer climberScorer = new ClimberScorer();
+    //BeaconScorer beaconScorer = new BeaconScorer();
 
     @Override
     public void init() {
-        lift.init(hardwareMap);
+        //lift.init(hardwareMap);
         try {
             drivetrain.init(hardwareMap);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        /*
         intake.init(hardwareMap);
         dumper.init(hardwareMap);
         ziplineScorer.init(hardwareMap);
         climberScorer.init(hardwareMap);
         beaconScorer.init(hardwareMap);
+        */
     }
 
     @Override
@@ -44,35 +44,16 @@ public class ClassifiedTeleOp extends OpMode{
         lift.setSpeed(-gamepad2.left_stick_y);
         */
 
-        //if (lift.isShiftedHigh) {
-        drivetrain.tankDrive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);//drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
-        lift.setSpeed(-gamepad2.left_stick_y);
-        /*} else {
-            lift.setSpeed(gamepad2.left_stick_y * 3.0 / 4.0);
-            drivetrain.arcadeDrive(gamepad2.left_stick_y, 0);
-        }
-        */
-
+        if(Math.abs(gamepad1.right_trigger) > .15)
+            drivetrain.tankDrive(-gamepad1.left_stick_y / 3.0, -gamepad1.right_stick_y / 3.0);//drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+        else
+            drivetrain.tankDrive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);//drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
 
         /*
-        if(gamepad2.dpad_up){
-            lift.isShiftedHigh = true;
-
-            drivetrain.arcadeDrive(0,0);
-            lift.setSpeed(0);
-
-            lift.setGear("High");
-        }
-
-        if(gamepad2.dpad_down){
-            lift.isShiftedHigh = false;
-
-            drivetrain.arcadeDrive(0, 0);
-            lift.setSpeed(0);
-
-            lift.setGear("Low");
-        }
-        */
+        if(Math.abs(gamepad2.right_trigger) > .15)
+            lift.setSpeed(-gamepad2.right_stick_y / 3.0);
+        else
+            lift.setSpeed(-gamepad2.right_stick_y);
 
 
         if(gamepad1.left_bumper)
@@ -104,17 +85,19 @@ public class ClassifiedTeleOp extends OpMode{
             climberScorer.reset();
 
         if(gamepad2.y)
-            climberScorer.raise();;
+            climberScorer.raise();
 
 
         if(gamepad2.dpad_left)
-            dumper.setLeft();
+            dumper.sweepLeft();
 
         if(gamepad2.dpad_right)
-            dumper.setRight();
+            dumper.sweepRight();
 
-        if(!(gamepad2.dpad_left || gamepad2.dpad_right))
-            dumper.setNeutral();
+        if(gamepad2.dpad_up)
+            dumper.reset();
+            */
 
     }
 }
+
