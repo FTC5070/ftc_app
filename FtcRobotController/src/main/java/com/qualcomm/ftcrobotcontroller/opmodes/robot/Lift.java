@@ -5,9 +5,10 @@ import com.qualcomm.robotcore.hardware.*;
  * Created by Carlos on 11/12/2015.
  */
 public class Lift {
-    public DcMotor liftMotor;
 
-    public int targetPosition = 0;
+    DcMotor liftMotor;
+
+    int targetPosition = 0;
     int error = 0;
     double KP = 0.05;
     int ERROR_TOLERANCE = 5;
@@ -29,7 +30,7 @@ public class Lift {
         else
             error = 0;
 
-        this.setSpeed(error * KP);
+        liftMotor.setPower(error * KP);
     }
 }
 
