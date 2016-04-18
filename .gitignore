@@ -26,6 +26,7 @@ build/
 
 *ASUS_PC_01*
 
-FtcRobotController/FtcRobotController.iml
-FtcRobotController/FtcRobotController.iml
-FtcRobotController/FtcRobotController.iml
+*.iml
+FtcRobotController/src/main/java/com/qualcomm/ftcrobotcontroller/opmodes/ServoTest.java
+FtcRobotController/src/main/java/com/qualcomm/ftcrobotcontroller/opmodes/TankDrive.java
+

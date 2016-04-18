@@ -16,6 +16,8 @@ public class Drivetrain {
     public DcMotor backRight;
 
     GyroSensor gyro;
+    //ColorSensor leftColorSensor;
+    //ColorSensor rightColorSensor;
 
     int heading = 0;
     public int headingTolerance = 2;
@@ -33,6 +35,8 @@ public class Drivetrain {
         backRight = hardwareMap.dcMotor.get("backRight");
 
         gyro = hardwareMap.gyroSensor.get("gyro");
+        //leftColorSensor = hardwareMap.colorSensor.get("leftSideDrivetrainColorSensor");
+        //rightColorSensor = hardwareMap.colorSensor.get("rightSideDrivetrainColorSensor");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -142,15 +146,9 @@ public class Drivetrain {
         if(goalHeading < 0)
             goalHeading += 360;
 
-        //telemetry.addData("Goal Heading: ", goalHeading);
-
         while (Math.abs(goalHeading - gyro.getHeading()) > headingTolerance) {
             arcadeDrive(0, speed);
-            //telemetry.addData("Current Heading: ", gyro.getHeading());
         }
-
-        //telemetry.addData(" ", "Turn Complete");
-
         brake();
     }
 
