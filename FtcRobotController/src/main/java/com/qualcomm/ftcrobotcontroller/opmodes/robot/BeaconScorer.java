@@ -9,15 +9,15 @@ import java.util.concurrent.TimeUnit;
  */
 public class BeaconScorer {
     Servo leftButtonServo;
-    double leftButtonInitPosition;
-    double leftButtonPressedPosition;
+    double leftButtonInitPosition = 0.65;
+    double leftButtonPressedPosition = 0;
 
     Servo rightButtonServo;
-    double rightButtonInitPosition;
-    double rightButtonPressedPosition;
+    double rightButtonInitPosition = 0.35;
+    double rightButtonPressedPosition = 0;
 
-    ColorSensor leftColorSensor;
-    ColorSensor rightColorSensor;
+    public ColorSensor leftColorSensor;
+    public ColorSensor rightColorSensor;
 
     long pressDelay = 50;
 

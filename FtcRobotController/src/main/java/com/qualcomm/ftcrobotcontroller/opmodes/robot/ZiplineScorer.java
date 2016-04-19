@@ -10,12 +10,15 @@ public class ZiplineScorer {
     Servo leftServo;
 
     double leftOut = 0.0;
-    double leftIn = 0.5;
+    double leftIn = 0.55
+
+
+            ;
 
     Servo rightServo;
 
-    double rightOut = 1.0;
-    double rightIn = 0.5;
+    double rightOut = 0.75;
+    double rightIn = 0.15;
 
     public ZiplineScorer(){
 
