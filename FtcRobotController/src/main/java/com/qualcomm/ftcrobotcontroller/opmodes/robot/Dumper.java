@@ -72,9 +72,9 @@ public class Dumper {
         motor.setPower(0);
     }
 
-    public void setToLeftPosition(){
-        while(leftLimitSwitch.getState() == false)
-            motor.setPower(-1);
+    public void setToRightPosition(){
+        while(rightLimitSwitch.getState() == false)
+            motor.setPower(1);
 
         motor.setPower(0);
     }
