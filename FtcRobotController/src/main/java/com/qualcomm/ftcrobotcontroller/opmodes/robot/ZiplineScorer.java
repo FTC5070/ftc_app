@@ -9,11 +9,11 @@ public class ZiplineScorer {
 
     Servo leftServo;
 
-    double leftOut = 0.0;
-    double leftIn = 0.55
+    double leftOut = 0.25;
+    double leftIn = 0.85;
 
 
-            ;
+
 
     Servo rightServo;
 
