@@ -15,6 +15,13 @@ public class Drivetrain {
     public DcMotor frontRight;
     public DcMotor backRight;
 
+    public Servo leftMountainBrake;
+    double leftMountainBrakeDown = 1.0;
+    double leftMountainBrakeUp = 0.4;
+    public Servo rightMountainBrake;
+    double rightMountainBrakeDown = 0.15;
+    double rightMountainBrakeUp = 0.8;
+
     GyroSensor gyro;
     //ColorSensor leftColorSensor;
     //ColorSensor rightColorSensor;
@@ -24,6 +31,7 @@ public class Drivetrain {
 
     double wheelCircumference = 6 * Math.PI;
     double ticksPerRotation = 1049;
+    double drivingKp = 2.0;
 
     public Drivetrain(){
     }
@@ -33,6 +41,9 @@ public class Drivetrain {
         backLeft = hardwareMap.dcMotor.get("backLeft");
         frontRight = hardwareMap.dcMotor.get("frontRight");
         backRight = hardwareMap.dcMotor.get("backRight");
+
+        leftMountainBrake = hardwareMap.servo.get("leftMountainBrakeServo");
+        rightMountainBrake = hardwareMap.servo.get("rightMountainBrakeServo");
 
         gyro = hardwareMap.gyroSensor.get("gyro");
         //leftColorSensor = hardwareMap.colorSensor.get("leftSideDrivetrainColorSensor");
@@ -49,7 +60,7 @@ public class Drivetrain {
 
     }
 
-    public void tankDrive(double leftSpeed,double rightSpeed) {
+    public void tankDrive(double leftSpeed, double rightSpeed) {
         frontLeft.setPower(leftSpeed);
         backLeft.setPower(leftSpeed);
 
@@ -75,6 +86,16 @@ public class Drivetrain {
             backLeft.setPower(0);
             backRight.setPower(0);
         }
+    }
+
+    public void lowerMountainBrake(){
+        leftMountainBrake.setPosition(leftMountainBrakeDown);
+        rightMountainBrake.setPosition(rightMountainBrakeDown);
+    }
+
+    public void raiseMountainBrake(){
+        leftMountainBrake.setPosition(leftMountainBrakeUp);
+        rightMountainBrake.setPosition(rightMountainBrakeUp);
     }
 
     public void resetEncoders() throws InterruptedException {
@@ -107,7 +128,6 @@ public class Drivetrain {
         }
     }
 
-
     public int getHeading() {
         return gyro.getHeading();
     }
@@ -128,10 +148,17 @@ public class Drivetrain {
 
     public void moveDistance(int targetEncoderValue, double speed) throws InterruptedException {
         resetEncoders();
+        int goalHeading = gyro.getHeading();
+        int currentHeading = 0;
+        int error = 0;
 
         while(Math.abs(getAverageEncoderValue("All")) < Math.abs(targetEncoderValue))
         {
-            tankDrive(speed, speed);
+            currentHeading = gyro.getHeading();
+
+            error = modularDistance(goalHeading, currentHeading, 360);
+
+            tankDrive(speed + error * drivingKp, speed - error * drivingKp);
         }
 
         brake();
@@ -190,5 +217,9 @@ public class Drivetrain {
 
     public void sleep(long milliseconds) throws InterruptedException {
         Thread.sleep(milliseconds);
+    }
+
+    private int modularDistance(int a, int b, int m){
+        return m/2 - ((3*m/2 + a - b) % m);
     }
 }
