@@ -8,15 +8,10 @@ import com.qualcomm.robotcore.hardware.*;
 public class ZiplineScorer {
 
     Servo leftServo;
-
-    double leftOut = 0.0;
-    double leftIn = 0.55
-
-
-            ;
+    double leftOut = 0.25;
+    double leftIn = 0.86;
 
     Servo rightServo;
-
     double rightOut = 0.75;
     double rightIn = 0.15;
 

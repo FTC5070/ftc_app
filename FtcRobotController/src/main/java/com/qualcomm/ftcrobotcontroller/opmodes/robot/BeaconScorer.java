@@ -8,13 +8,13 @@ import java.util.concurrent.TimeUnit;
  * Created by Nikhil on 11/13/2015.
  */
 public class BeaconScorer {
-    Servo leftButtonServo;
-    double leftButtonInitPosition = 0.65;
-    double leftButtonPressedPosition = 0;
+    public Servo leftButtonServo;
+    public double leftButtonInitPosition = 0.65;
+    public double leftButtonPressedPosition = 0;
 
-    Servo rightButtonServo;
-    double rightButtonInitPosition = 0.35;
-    double rightButtonPressedPosition = 0;
+    public Servo rightButtonServo;
+    public double rightButtonInitPosition = 0.35;
+    public double rightButtonPressedPosition = 1.0;
 
     public ColorSensor leftColorSensor;
     public ColorSensor rightColorSensor;
