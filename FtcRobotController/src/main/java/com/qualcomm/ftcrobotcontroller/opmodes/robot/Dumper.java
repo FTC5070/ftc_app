@@ -24,7 +24,7 @@ public class Dumper {
 
     DcMotor motor;
     int motorLeftPostion;
-    int motorInitPosition;
+    int motorCenterPosition;
     int motorRightPosition;
 
     int targetPosition = 0;
@@ -32,10 +32,10 @@ public class Dumper {
     double KP = 0.05;
     int ERROR_TOLERANCE = 5;
 
-    public Dumper(){
+    public Dumper() {
     }
 
-    public void init(HardwareMap hardwareMap){
+    public void init(HardwareMap hardwareMap) {
 
         motor = hardwareMap.dcMotor.get("dumperServo");
         leftFlap = hardwareMap.servo.get("leftFlapServo");
@@ -47,7 +47,35 @@ public class Dumper {
         rightFlap.setPosition(rightFlapClosedPosition);
     }
 
-    public void setPosition(int position){
+    public void initializeEncoderValue() {
+        while (leftLimitSwitch.getState() == false) {
+            motor.setPower(-0.5);
+        }
+        motor.setPower(0);
+
+        motor.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        motor.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+        motorLeftPostion = motor.getCurrentPosition();
+
+        while (rightLimitSwitch.getState() == false) {
+            motor.setPower(0.5);
+        }
+        motor.setPower(0);
+
+        motorRightPosition = motor.getCurrentPosition();
+
+        motorCenterPosition = (motorLeftPostion + motorRightPosition) / 2;
+
+        setPosition(motorCenterPosition);
+    }
+
+    public void setPosition(int position) {
 
         targetPosition = position;
 
@@ -57,27 +85,44 @@ public class Dumper {
             else
                 error = 0;
 
-            if(leftLimitSwitch.getState() || rightLimitSwitch.getState())
+            if (leftLimitSwitch.getState() || rightLimitSwitch.getState())
                 error = 0;
 
             motor.setPower(error * KP);
         }
-        while(Math.abs(error) > ERROR_TOLERANCE);
+        while (Math.abs(error) > ERROR_TOLERANCE);
     }
 
-    public void setToLeftPosition(){
-        while(leftLimitSwitch.getState() == false)
+    public void setToLeftPosition() {
+        while (leftLimitSwitch.getState() == false)
             motor.setPower(-1);
 
         motor.setPower(0);
     }
 
-    public void setToRightPosition(){
-        while(rightLimitSwitch.getState() == false)
+    public void setToRightPosition() {
+        while (rightLimitSwitch.getState() == false)
             motor.setPower(1);
 
         motor.setPower(0);
     }
+
+    public void moveLeft(){
+        motor.setPower(1);
+    }
+
+    public void moveRight(){
+        motor.setPower(-1);
+    }
+
+    public void stop(){
+        motor.setPower(0);
+    }
+
+    public void setToCenterPosition() {
+        setPosition(motorCenterPosition);
+    }
+
 
     public void openLeftFlap(){
         leftFlap.setPosition(leftFlapOpenPosition);

@@ -23,6 +23,9 @@ public class Lift {
         liftMotor.setPower(speed);
     }
 
+    public void setTargetPosition(int position){
+        targetPosition = position;
+    }
     public void updatePosition(){
 
         if(Math.abs(error) > ERROR_TOLERANCE)
